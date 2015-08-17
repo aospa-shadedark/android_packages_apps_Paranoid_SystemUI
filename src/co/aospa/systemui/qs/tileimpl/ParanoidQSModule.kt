@@ -25,6 +25,7 @@ import co.aospa.systemui.qs.tiles.FivegTile
 import co.aospa.systemui.qs.tiles.HeadsUpTile
 import co.aospa.systemui.qs.tiles.PowerShareTile
 import co.aospa.systemui.qs.tiles.UsbTetherTile
+import co.aospa.systemui.qs.tiles.VolumeTile
 import co.aospa.systemui.qs.tiles.WifiTile
 import com.android.systemui.qs.tileimpl.QSTileImpl
 import dagger.Binds
@@ -95,4 +96,9 @@ interface ParanoidQSModule {
     @StringKey(FivegTile.TILE_SPEC)
     fun bindFivegTile(fivegTile: FivegTile): QSTileImpl<*>
 
+    /** Inject VolumeTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(VolumeTile.TILE_SPEC)
+    fun bindVolumeTile(volumeTile: VolumeTile): QSTileImpl<*>
 }
