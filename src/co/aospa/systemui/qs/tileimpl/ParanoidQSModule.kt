@@ -22,6 +22,7 @@ import co.aospa.systemui.qs.tiles.DataSwitchTile
 import co.aospa.systemui.qs.tiles.DcDimmingTile
 import co.aospa.systemui.qs.tiles.HeadsUpTile
 import co.aospa.systemui.qs.tiles.PowerShareTile
+import co.aospa.systemui.qs.tiles.PreferredNetworkTile
 import co.aospa.systemui.qs.tiles.RefreshRateTile
 import co.aospa.systemui.qs.tiles.SoundTile
 import co.aospa.systemui.qs.tiles.UsbTetherTile
@@ -79,6 +80,12 @@ interface ParanoidQSModule {
     @IntoMap
     @StringKey(PowerShareTile.TILE_SPEC)
     fun bindPowerShareTile(powerShareTile: PowerShareTile): QSTileImpl<*>
+
+    /** Inject PreferredNetworkTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(PreferredNetworkTile.TILE_SPEC)
+    fun bindPreferredNetworkTile(preferredNetworkTile: PreferredNetworkTile): QSTileImpl<*>
 
     /** Inject RefreshRateTile into tileMap in QSModule */
     @Binds
@@ -233,6 +240,21 @@ interface ParanoidQSModule {
                     ),
                 instanceId = uiEventLogger.getNewInstanceId(),
                 category = TileCategory.UTILITIES,
+            )
+
+        @Provides
+        @IntoMap
+        @StringKey(PreferredNetworkTile.TILE_SPEC)
+        fun providePreferredNetworkTile(uiEventLogger: QsEventLogger): QSTileConfig =
+            QSTileConfig(
+                tileSpec = TileSpec.create(PreferredNetworkTile.TILE_SPEC),
+                uiConfig =
+                    QSTileUIConfig.Resource(
+                        iconRes = R.drawable.ic_qs_preferred_network,
+                        labelRes = R.string.qs_preferred_network_label
+                    ),
+                instanceId = uiEventLogger.getNewInstanceId(),
+                category = TileCategory.CONNECTIVITY,
             )
 
         @Provides
