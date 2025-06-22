@@ -22,6 +22,7 @@ import co.aospa.systemui.qs.tiles.DataSwitchTile
 import co.aospa.systemui.qs.tiles.DcDimmingTile
 import co.aospa.systemui.qs.tiles.HeadsUpTile
 import co.aospa.systemui.qs.tiles.PowerShareTile
+import co.aospa.systemui.qs.tiles.RefreshRateTile
 import co.aospa.systemui.qs.tiles.SoundTile
 import co.aospa.systemui.qs.tiles.UsbTetherTile
 import co.aospa.systemui.qs.tiles.VolumeTile
@@ -78,6 +79,12 @@ interface ParanoidQSModule {
     @IntoMap
     @StringKey(PowerShareTile.TILE_SPEC)
     fun bindPowerShareTile(powerShareTile: PowerShareTile): QSTileImpl<*>
+
+    /** Inject RefreshRateTile into tileMap in QSModule */
+    @Binds
+    @IntoMap
+    @StringKey(RefreshRateTile.TILE_SPEC)
+    fun bindRefreshRateTile(refreshRateTile: RefreshRateTile): QSTileImpl<*>
 
     /** Inject SoundTile into tileMap in QSModule */
     @Binds
@@ -226,6 +233,21 @@ interface ParanoidQSModule {
                     ),
                 instanceId = uiEventLogger.getNewInstanceId(),
                 category = TileCategory.UTILITIES,
+            )
+
+        @Provides
+        @IntoMap
+        @StringKey(RefreshRateTile.TILE_SPEC)
+        fun provideRefreshRateTileConfig(uiEventLogger: QsEventLogger): QSTileConfig =
+            QSTileConfig(
+                tileSpec = TileSpec.create(RefreshRateTile.TILE_SPEC),
+                uiConfig =
+                    QSTileUIConfig.Resource(
+                        iconRes = R.drawable.ic_refresh_rate,
+                        labelRes = R.string.refresh_rate_tile_label
+                    ),
+                instanceId = uiEventLogger.getNewInstanceId(),
+                category = TileCategory.DISPLAY,
             )
 
         @Provides
